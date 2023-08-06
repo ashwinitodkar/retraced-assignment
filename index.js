@@ -47,7 +47,7 @@ app.use(bodyParser.json());
 /**
  * Initialize the router.
  **/
-app.use('/api', require('./lib/controllers/'));
+app.use('/api', require('./src/controllers/'));
 
 // options for the swagger docs
 const options = {
