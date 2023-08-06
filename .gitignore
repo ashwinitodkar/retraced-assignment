@@ -1,0 +1,23 @@
+logs/*
+!logs/.keep
+
+npm-debug.log*
+
+# Dependency directory
+node_modules
+
+# Optional npm cache directory
+.npm
+
+#Documentation
+out
+
+#sample-tests
+test
+
+#archive
+*.rar
+
+.dev.env
+
+prettier.config.js
