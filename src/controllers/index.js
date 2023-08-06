@@ -8,6 +8,6 @@ const express = require('express'),
  * - name: "category"
  *   description: "Endpoints for category"
  */
-router.use('/categories', require('./category'));
+router.use('/categories', require('../category/category.controller'));
 
 module.exports = router;

@@ -2,8 +2,9 @@
 const express = require('express'),
   router = express.Router(),
   schema = require('./schema'),
-  category = require('./category'),
-  logger = require('../../lib/logger');
+  categoryService = require('./category.service'),
+  logger = require('../lib/logger'),
+  expressJoi = require('../helpers/joiValidation');
 
 /**
  * @swagger
@@ -39,28 +40,15 @@ const express = require('express'),
  */
 router.get(
   '/',
-  global.expressJoi.joiValidate(schema.getCategoriesInputParams),
-  (req, res, next) => {
-    category
-      .getCategories(req.query.id)
-      .then((data) => {
-        logger.info(
-          `find-categories-and-subcategories-${req.query.id}-result-${data}`
-        );
-        if (data) {
-          return res.status(200).json({
-            responseCode: 200,
-            data: data[0],
-          });
-        }
-        return res.status(404).json({
-          responseCode: 404,
-          responseDesc: global.config.default_not_found_message,
-        });
-      })
-      .catch((error) => {
-        next(error);
-      });
+  expressJoi.joiValidate(schema.getCategoriesInputParams),
+  async (req, res, next) => {
+    try {
+      const data = await categoryService.getCategoryTree(req.query.id);
+      res.send({ data, responseCode: 200 });
+    } catch (e) {
+      logger.error('Error in processing get category', e);
+      next(e);
+    }
   }
 );
 

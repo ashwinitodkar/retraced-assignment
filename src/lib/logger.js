@@ -7,23 +7,10 @@ const logger = winston.createLogger({
     winston.format.timestamp({
       format: 'YYYY-MM-DD HH:mm:ss',
     }),
-    winston.format.printf(
-      (info) =>
-        `${info.timestamp} ${info.level}: ${info.message}` +
-        (info.splat !== undefined ? `${info.splat}` : ' ')
-    )
+    winston.format.splat()
   ),
+  transports: [new winston.transports.Console()],
 });
-
-logger.add(
-  new winston.transports.Console({
-    format: winston.format.combine(
-      winston.format.timestamp({
-        format: 'YYYY-MM-DD HH:mm:ss',
-      })
-    ),
-  })
-);
 
 //check for environment and write log in files
 
