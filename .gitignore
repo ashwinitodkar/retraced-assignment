@@ -21,3 +21,5 @@ test
 .dev.env
 
 prettier.config.js
+
+coverage/*

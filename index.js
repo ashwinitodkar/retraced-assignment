@@ -16,21 +16,6 @@ global.config = require('./src/config/');
 //globally set the express-joi variable
 global.expressJoi = require('./src/helpers/joiValidation');
 
-/** Create the directory for writing the logs
-
-let logFolder = global.config.logs.logFolder;
-
-if (!fs.existsSync(logFolder)) {
-  try {
-    fs.mkdirSync(logFolder);
-  } catch (e) {
-    throw new Error(
-      `Error creating log folder ${logFolder} - ${JSON.stringify(e)}`
-    );
-  }
-}
- **/
-
 //make connection to mysql
 global.pool = require('./src/lib/mysql');
 
@@ -54,7 +39,7 @@ const options = {
   // import swaggerDefinitions
   swaggerDefinition: global.config.swaggerDefinition,
   // path to the API docs
-  apis: ['./src/controllers/category/*.js'],
+  apis: ['./src/category/*.js', './src/controllers/*.js'],
 };
 
 // initialize swagger-jsdoc
