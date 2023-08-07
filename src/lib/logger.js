@@ -1,17 +1,20 @@
 const winston = require('winston');
-
+const { format } = winston;
 const logger = winston.createLogger({
-  level: 'info',
   format: winston.format.combine(
-    winston.format.json(),
     winston.format.timestamp({
-      format: 'YYYY-MM-DD HH:mm:ss',
+      format: 'DD-MM-YYYY HH:mm:ss',
     }),
-    winston.format.splat()
+    format.splat(),
+    winston.format.printf(({ level, message, timestamp, ...meta }) => {
+      return (
+        `${level}: ${[timestamp]}: ` +
+        (undefined !== message ? message : '') +
+        (meta && Object.keys(meta).length ? '\n\t' + JSON.stringify(meta) : '')
+      );
+    })
   ),
   transports: [new winston.transports.Console()],
 });
-
-//check for environment and write log in files
 
 module.exports = logger;

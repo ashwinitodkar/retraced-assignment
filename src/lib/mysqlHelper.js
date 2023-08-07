@@ -1,15 +1,20 @@
 const logger = require('./logger');
 
 module.exports.execStoredProcedure = function (spName, params) {
-  var paramPlaceHolder = '';
-  if (params && params.length) {
-    for (var i = 0; i < params.length; i++) {
-      paramPlaceHolder += '?,';
+  try {
+    let paramPlaceHolder = '';
+    if (params && params.length) {
+      for (let i = 0; i < params.length; i++) {
+        paramPlaceHolder += '?,';
+      }
     }
+    if (paramPlaceHolder.length) {
+      paramPlaceHolder = paramPlaceHolder.slice(0, -1);
+    }
+    logger.info(`Stored Procedure CALL ${spName}(${params})`);
+    return pool.query(`CALL ${spName}(${paramPlaceHolder})`, params);
+  } catch (error) {
+    logger.error(`Error in calling Stored Procedure CALL ${spName}(${params})`);
+    return Promise.reject(error);
   }
-  if (paramPlaceHolder.length) {
-    paramPlaceHolder = paramPlaceHolder.slice(0, -1);
-  }
-  logger.info('final SP call', `CALL ${spName}(${params})`);
-  return pool.query(`CALL ${spName}(${paramPlaceHolder})`, params);
 };

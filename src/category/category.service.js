@@ -32,9 +32,9 @@ const getCategoryTree = async (categoryId) => {
     const tree = getNestedCategories(categories[0], categoryId);
 
     return tree.length ? tree : categories[0];
-  } catch (e) {
+  } catch (error) {
     logger.error('Error in processing tree data', e);
-    throw e;
+    throw error;
   }
 };
 

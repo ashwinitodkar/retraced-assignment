@@ -45,9 +45,9 @@ router.get(
     try {
       const data = await categoryService.getCategoryTree(req.query.id);
       res.send({ data, responseCode: 200 });
-    } catch (e) {
+    } catch (error) {
       logger.error('Error in processing get category', e);
-      next(e);
+      next(error);
     }
   }
 );
