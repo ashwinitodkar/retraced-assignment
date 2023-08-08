@@ -7,7 +7,6 @@ RUN npm -v && ls
 FROM keymetrics/pm2:8-alpine
 RUN npm i -g nodemon
 RUN apk -U upgrade && apk add curl && rm -rf /var/cache/apk/*
-WORKDIR /usr/src/app
 COPY --from=base /usr/src/app .
 RUN npm -v && ls
 EXPOSE 3000

@@ -3,10 +3,10 @@ const logger = require('../lib/logger');
 const categoryRepository = require('./category.repository');
 
 function getNestedCategories(categories, categoryId) {
-  var categoryTree = [];
+  let categoryTree = [];
   for (let i in categories) {
     if (categories[i].parentId == categoryId) {
-      var children = getNestedCategories(categories, categories[i].id);
+      let children = getNestedCategories(categories, categories[i].id);
 
       if (children.length) {
         categories[i].subCategory = children;
@@ -29,11 +29,22 @@ const getCategoryTree = async (categoryId) => {
       return [];
     }
 
+    let rootNode = null;
     const tree = getNestedCategories(categories[0], categoryId);
+    if (categoryId !== undefined && categoryId !== null) {
+      rootNode = categories[0].find((category) => category.id == categoryId);
+    }
+    if (tree.length) {
+      if (rootNode) {
+        rootNode.subCategory = tree;
+        return rootNode;
+      }
+      return tree;
+    }
 
-    return tree.length ? tree : categories[0];
+    return categories[0];
   } catch (error) {
-    logger.error('Error in processing tree data', e);
+    logger.error('Error in processing tree data', error);
     throw error;
   }
 };
