@@ -18,8 +18,6 @@ test
 #archive
 *.rar
 
-.dev.env
-
 prettier.config.js
 
 coverage/*
