@@ -16,7 +16,7 @@ INSERT INTO Categories (ParentId,Name) VALUES
 ,(1,'A2')
 ,(3,'B2');
 
-INSERT INTO Folders (ParentFolderId,Name) VALUES 
+INSERT INTO Categories (ParentId,Name) VALUES 
  (4,'B10')
 ,(4,'B11')
 
