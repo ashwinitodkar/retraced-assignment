@@ -37,7 +37,7 @@ const getCategoryTree = async (categoryId) => {
     if (tree.length) {
       if (rootNode) {
         rootNode.subCategory = tree;
-        return rootNode;
+        return [rootNode];
       }
       return tree;
     }

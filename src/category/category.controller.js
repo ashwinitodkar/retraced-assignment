@@ -44,7 +44,16 @@ router.get(
   async (req, res, next) => {
     try {
       const data = await categoryService.getCategoryTree(req.query.id);
-      res.send({ data, responseCode: 200 });
+      //if (data && data.length) {
+      return res.send({
+        data,
+        responseCode: global.config.default_success_http_code,
+      });
+      //}
+      // return res.status(global.config.default_not_found_http_code).send({
+      //   responseCode: global.config.default_not_found_http_code,
+      //   responseDesc: global.config.default_not_found_message,
+      // });
     } catch (error) {
       logger.error('Error in processing get category', error);
       next(error);
